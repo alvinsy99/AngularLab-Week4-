@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { Route, Router } from "@angular/router";
+import { Route, Router, Data } from "@angular/router";
+import { DataService } from "../services/data.service";
+import { HttpErrorResponse } from "@angular/common/http";
+
 // import { Router } from "@angular/router";
 
 @Component({
@@ -10,13 +13,13 @@ import { Route, Router } from "@angular/router";
 export class LoginComponent implements OnInit {
   email: "";
   password: "";
-  valid_user = [
-    { email: "test@mail.com", password: "123" },
-    { email: "abc@mail.com", password: "098" },
-    { email: "validmail@mail.com", password: "valid" }
-  ];
+  // valid_user = [
+  //   { email: "test@mail.com", password: "123" },
+  //   { email: "abc@mail.com", password: "098" },
+  //   { email: "validmail@mail.com", password: "valid" }
+  // ];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private dataservice: DataService) {
     // this.email = email;
     // this.password = password;
   }
@@ -27,17 +30,18 @@ export class LoginComponent implements OnInit {
     // alert("Clicked");
     console.log(this.email);
     console.log(this.password);
-    for (let i = 0; i < this.valid_user.length; i++) {
-      if (
-        this.email == this.valid_user[i].email &&
-        this.password == this.valid_user[i].password
-      ) {
+    this.dataservice.logIn(this.email, this.password).subscribe(data => {
+      var dataJSON = JSON.stringify(data);
+      console.log(dataJSON);
+
+      if (data.valid === true) {
+        sessionStorage.setItem("sessionUser", dataJSON);
         this.router.navigateByUrl("/account");
-        alert("Logged In");
-      } else {
-        alert("Log In Failed!!!!!!");
-        break;
+        console.log(data);
       }
-    }
+    }),
+      (error: HttpErrorResponse) => {
+        alert("Error" + error);
+      };
   }
 }

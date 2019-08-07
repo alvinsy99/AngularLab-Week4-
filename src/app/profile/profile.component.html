@@ -1,0 +1,58 @@
+<h1>Profile Form</h1>
+
+<div class="login-form">
+  <form>
+    <h2 class="text-center">Edit Profile</h2>
+    <div class="form-group">
+      <p>{{ data.email }}</p>
+      <input
+        type="email"
+        class="form-control"
+        placeholder="{{ data.email }}"
+        [(ngModel)]="email"
+        name="email"
+      />
+    </div>
+
+    <div class="form-group">
+      <p>{{ data.username }}</p>
+      <input
+        type="username"
+        class="form-control"
+        placeholder="{{ data.username }}"
+        [(ngModel)]="username"
+        name="username"
+      />
+    </div>
+
+    <div class="form-group">
+      <p>{{ data.birthday }}</p>
+      <input
+        type="birthday"
+        class="form-control"
+        placeholder="{{ data.birthday }}"
+        [(ngModel)]="birthday"
+        name="birthday"
+      />
+    </div>
+    <div class="form-group">
+      <p>{{ data.age }}</p>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="{{ data.age }}"
+        [(ngModel)]="age"
+        name="age"
+      />
+    </div>
+    <div class="form-group">
+      <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        (click)="profileSubmit()"
+      >
+        Edit
+      </button>
+    </div>
+  </form>
+</div>
